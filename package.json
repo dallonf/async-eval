@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dallonf/async-eval"
+    "url": "git://github.com/dallonf/async-eval.git"
   },
   "main": "index.js",
   "engines": {
@@ -17,5 +17,10 @@
   "devDependencies": {
     "chai": "*",
     "mocha": "*"
+  },
+  "optionalDependencies": {},
+  "homepage": "https://github.com/dallonf/async-eval",
+  "scripts": {
+    "test": "mocha"
   }
 }
