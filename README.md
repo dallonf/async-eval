@@ -4,6 +4,17 @@ Execute arbitrary JS with callbacks in node.js
 
 Note: This library actually uses `vm.runInNewContext()` instead of `eval()` for a bit more added security, though it doesn't fork a process, so it's best used with trusted code.
 
+## Installation
+
+    npm install async-eval
+    npm test
+
+or
+
+    git clone https://github.com/dallonf/async-eval
+    npm install
+    npm test 
+
 ## Example usage
 
     var asyncEval = require('async-eval');
