@@ -6,7 +6,7 @@ var wait = function(callback) {
 };
 
 function funcToString(func) {
-  return "(" + func.toString() + ")()";
+  return "(" + func.toString() + ").apply(this)";
 }
 
 describe('asyncEval', function() {
@@ -103,6 +103,7 @@ describe('asyncEval', function() {
     };
 
     var test = function() {
+      this.x = 1;
       wait.ten(function() {
         this.x += 10;
         wait.fifty(function() {
@@ -114,7 +115,7 @@ describe('asyncEval', function() {
     var self = {};
 
     asyncEval(funcToString(test), {asyncFunctions: async, this: self}, function(err) {
-      expect(self.x).to.equal(60);
+      expect(self.x).to.equal(61);
       done(err);
     });
 
