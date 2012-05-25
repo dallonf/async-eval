@@ -58,15 +58,19 @@ describe('asyncEval', function() {
 
   it('should not continue the event after cancel is called', function(done) {
     var test = function() {
-      setTimeout(function() {
+      waitTen(function() {
         this.x = 5;
-      }, 10);
+      });
       cancel();
     };
 
+    function waitTen(callback) {
+      setTimeout(callback, 10);
+    }
+
     var self = {};
 
-    asyncEval(funcToString(test), {this: self, asyncFunctions: { setTimeout: setTimeout }}, function(err) {
+    asyncEval(funcToString(test), {this: self, asyncFunctions: { waitTen: waitTen }}, function(err) {
       setTimeout(function() {
         expect(this.x).to.not.exist;
         done();
