@@ -64,6 +64,10 @@ describe('asyncEval', function() {
       cancel();
     };
 
+    function cancel() {
+      throw new Error("Cancelled");
+    }
+
     function waitTen(callback) {
       setTimeout(callback, 10);
     }
