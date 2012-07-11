@@ -56,6 +56,15 @@ describe('asyncEval', function() {
     });
   });
 
+  it('should return a valid runtime error', function(done) {
+    asyncEval("var x = undefined; \n x.toString();", function(err) {
+      expect(err).to.exist;
+      expect(err instanceof TypeError).to.equal(true);
+      expect(err.message).to.equal("Cannot call method 'toString' of undefined");
+      done();
+    });
+  });
+
   it('should not continue the event after cancel is called', function(done) {
     var test = function() {
       waitTen(function() {
@@ -93,6 +102,23 @@ describe('asyncEval', function() {
 
     asyncEval(funcToString(test), {asyncFunctions: {wait: wait}}, function(err) {
       expect(err).to.exist;
+      done();
+    });
+  });
+
+  it('should return a valid runtime error from a callback', function(done) {
+
+    var test = function() {
+      var foo = undefined;
+      wait(function() {
+        foo.toString();
+      });
+    };
+
+    asyncEval(funcToString(test), {asyncFunctions: {wait: wait}}, function(err) {
+      expect(err).to.exist;
+      expect(err instanceof TypeError).to.equal(true);
+      expect(err.message).to.equal("Cannot call method 'toString' of undefined");
       done();
     });
   });
