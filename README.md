@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/dallonf/async-eval.png)](http://travis-ci.org/dallonf/async-eval)
 # async-eval
 
 Execute arbitrary JS with callbacks in node.js
