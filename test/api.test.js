@@ -1,3 +1,4 @@
+/*jshint expr:true*/
 var asyncEval = require('../');
 var expect = require('chai').expect;
 
@@ -39,7 +40,7 @@ describe('asyncEval', function() {
       , {this: self, asyncFunctions: {wait: wait}}, function() {
       expect(self.x).to.equal(5);
       done();
-    })
+    });
   });
 
   it('should return a syntax error', function(done) {
@@ -94,7 +95,7 @@ describe('asyncEval', function() {
   it('should return a runtime error from a callback', function(done) {
 
     var test = function() {
-      var foo = undefined;
+      var foo;
       wait(function() {
         foo.toString();
       });
@@ -109,7 +110,7 @@ describe('asyncEval', function() {
   it('should return a valid runtime error from a callback', function(done) {
 
     var test = function() {
-      var foo = undefined;
+      var foo;
       wait(function() {
         foo.toString();
       });
@@ -142,7 +143,7 @@ describe('asyncEval', function() {
         this.x += 10;
         wait.fifty(function() {
           this.x += 50;
-        })
+        });
       });
     };
 
@@ -153,5 +154,28 @@ describe('asyncEval', function() {
       done(err);
     });
 
+  });
+
+  it('should return the value of an async function', function(done) {
+    var async = {
+      waitAndReturn: function(callback) {
+        setTimeout(callback, 2);
+        return 2;
+      }
+    };
+
+    var test = function() {
+      this.x = waitAndReturn(function() {
+        this.y = 1;
+      });
+    };
+
+    var self = {};
+
+    asyncEval(funcToString(test), {asyncFunctions: async, this: self}, function(err) {
+      expect(self.y).to.equal(1);
+      expect(self.x).to.equal(2);
+      done(err);
+    });
   });
 });

@@ -1,6 +1,6 @@
 # async-eval
 
-Execute arbitrary JS with callbacks in node.js
+Execute arbitrary JS with callbacks in node.js. Also counts asynchronous operations and does not return until all callbacks have been executed.
 
 Note: This library actually uses `vm.runInNewContext()` instead of `eval()` for a bit more added security, though it doesn't fork a process, so it's best used with trusted code.
 
